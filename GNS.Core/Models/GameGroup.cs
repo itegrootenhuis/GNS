@@ -5,11 +5,11 @@ namespace GNS.Core.Models
 {
     public class GameGroup
     {
-        //public AspNetUser Ledger { get; set; }
-
         public IEnumerable<Game> Games { get; set; }
 
         public Guid Id { get; set; }
+
+        public Guid LedgerId { get; set; }
 
         public string Name { get; set; }
 

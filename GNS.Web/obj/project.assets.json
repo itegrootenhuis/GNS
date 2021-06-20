@@ -1652,6 +1652,16 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "GNS.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/GNS.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/GNS.Core.dll": {}
+        }
       }
     }
   },
@@ -6082,10 +6092,16 @@
         "system.xml.xmlserializer.4.3.0.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
+    },
+    "GNS.Core/1.0.0": {
+      "type": "project",
+      "path": "../GNS.Core/GNS.Core.csproj",
+      "msbuildProject": "../GNS.Core/GNS.Core.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
+      "GNS.Core >= 1.0.0",
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 5.0.7",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 5.0.7",
       "Microsoft.AspNetCore.Identity.UI >= 5.0.7",
@@ -6131,7 +6147,11 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "E:\\Personal Projects\\GNS\\GNS.Core\\GNS.Core.csproj": {
+              "projectPath": "E:\\Personal Projects\\GNS\\GNS.Core\\GNS.Core.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

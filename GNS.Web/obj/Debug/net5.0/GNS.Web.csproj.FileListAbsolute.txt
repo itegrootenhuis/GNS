@@ -85,3 +85,5 @@ E:\Personal Projects\GNS\GNS.Web\obj\Debug\net5.0\GNS.Web.csproj.AssemblyReferen
 E:\Personal Projects\GNS\GNS.Web\obj\Debug\net5.0\Razor\Views\Shared\header\_LoginPartial.cshtml.g.cs
 E:\Personal Projects\GNS\GNS.Web\obj\Debug\net5.0\Razor\Views\Shared\header\_header.cshtml.g.cs
 E:\Personal Projects\GNS\GNS.Web\obj\Debug\net5.0\Razor\Views\Admin\Index.cshtml.g.cs
+E:\Personal Projects\GNS\GNS.Web\bin\Debug\net5.0\GNS.Core.dll
+E:\Personal Projects\GNS\GNS.Web\bin\Debug\net5.0\GNS.Core.pdb

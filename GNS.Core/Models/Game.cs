@@ -5,6 +5,8 @@ namespace GNS.Core.Models
 {
     public class Game
     {
+        public Guid GameGroupId { get; set; }
+
         public Guid Id { get; set; }
 
         public string Name { get; set; }
