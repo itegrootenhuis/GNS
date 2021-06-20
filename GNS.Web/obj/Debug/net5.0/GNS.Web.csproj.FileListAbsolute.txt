@@ -70,7 +70,6 @@ E:\Personal Projects\GNS\GNS.Web\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.
 E:\Personal Projects\GNS\GNS.Web\obj\Debug\net5.0\Razor\Views\Home\Privacy.cshtml.g.cs
 E:\Personal Projects\GNS\GNS.Web\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
 E:\Personal Projects\GNS\GNS.Web\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
-E:\Personal Projects\GNS\GNS.Web\obj\Debug\net5.0\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
 E:\Personal Projects\GNS\GNS.Web\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
 E:\Personal Projects\GNS\GNS.Web\obj\Debug\net5.0\Razor\Views\_ViewImports.cshtml.g.cs
 E:\Personal Projects\GNS\GNS.Web\obj\Debug\net5.0\Razor\Views\_ViewStart.cshtml.g.cs
@@ -82,3 +81,7 @@ E:\Personal Projects\GNS\GNS.Web\obj\Debug\net5.0\GNS.Web.dll
 E:\Personal Projects\GNS\GNS.Web\obj\Debug\net5.0\ref\GNS.Web.dll
 E:\Personal Projects\GNS\GNS.Web\obj\Debug\net5.0\GNS.Web.pdb
 E:\Personal Projects\GNS\GNS.Web\obj\Debug\net5.0\GNS.Web.genruntimeconfig.cache
+E:\Personal Projects\GNS\GNS.Web\obj\Debug\net5.0\GNS.Web.csproj.AssemblyReference.cache
+E:\Personal Projects\GNS\GNS.Web\obj\Debug\net5.0\Razor\Views\Shared\header\_LoginPartial.cshtml.g.cs
+E:\Personal Projects\GNS\GNS.Web\obj\Debug\net5.0\Razor\Views\Shared\header\_header.cshtml.g.cs
+E:\Personal Projects\GNS\GNS.Web\obj\Debug\net5.0\Razor\Views\Admin\Index.cshtml.g.cs
