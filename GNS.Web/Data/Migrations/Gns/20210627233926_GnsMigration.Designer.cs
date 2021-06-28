@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GNS.Web.Data.Migrations.Gns
 {
     [DbContext(typeof(GnsEntities))]
-    [Migration("20210620152130_GnsSchema")]
-    partial class GnsSchema
+    [Migration("20210627233926_GnsMigration")]
+    partial class GnsMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,26 +23,26 @@ namespace GNS.Web.Data.Migrations.Gns
 
             modelBuilder.Entity("GNS.Core.Models.Game", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("GameId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("GameGroupId")
+                    b.Property<Guid?>("GroupId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("GameId");
 
-                    b.HasIndex("GameGroupId");
+                    b.HasIndex("GroupId");
 
                     b.ToTable("Games");
                 });
 
-            modelBuilder.Entity("GNS.Core.Models.GameGroup", b =>
+            modelBuilder.Entity("GNS.Core.Models.Group", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("GroupId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -52,14 +52,14 @@ namespace GNS.Web.Data.Migrations.Gns
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("GroupId");
 
-                    b.ToTable("GameGroups");
+                    b.ToTable("Groups");
                 });
 
             modelBuilder.Entity("GNS.Core.Models.Player", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("PlayerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -69,56 +69,84 @@ namespace GNS.Web.Data.Migrations.Gns
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("GameGroupId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("GameId")
+                    b.Property<Guid?>("GroupId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<Guid?>("RecordId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("GameGroupId");
+                    b.HasKey("PlayerId");
 
-                    b.HasIndex("GameId");
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("RecordId");
 
                     b.ToTable("Players");
                 });
 
+            modelBuilder.Entity("GNS.Core.Models.Record", b =>
+                {
+                    b.Property<Guid>("RecordId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("GameId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("RecordId");
+
+                    b.HasIndex("GameId");
+
+                    b.ToTable("Records");
+                });
+
             modelBuilder.Entity("GNS.Core.Models.Game", b =>
                 {
-                    b.HasOne("GNS.Core.Models.GameGroup", null)
+                    b.HasOne("GNS.Core.Models.Group", "Group")
                         .WithMany("Games")
-                        .HasForeignKey("GameGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GroupId");
+
+                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("GNS.Core.Models.Player", b =>
                 {
-                    b.HasOne("GNS.Core.Models.GameGroup", null)
+                    b.HasOne("GNS.Core.Models.Group", "Group")
                         .WithMany("Players")
-                        .HasForeignKey("GameGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GroupId");
 
-                    b.HasOne("GNS.Core.Models.Game", null)
+                    b.HasOne("GNS.Core.Models.Record", null)
                         .WithMany("Winners")
-                        .HasForeignKey("GameId");
+                        .HasForeignKey("RecordId");
+
+                    b.Navigation("Group");
                 });
 
-            modelBuilder.Entity("GNS.Core.Models.Game", b =>
+            modelBuilder.Entity("GNS.Core.Models.Record", b =>
                 {
-                    b.Navigation("Winners");
+                    b.HasOne("GNS.Core.Models.Game", "Game")
+                        .WithMany()
+                        .HasForeignKey("GameId");
+
+                    b.Navigation("Game");
                 });
 
-            modelBuilder.Entity("GNS.Core.Models.GameGroup", b =>
+            modelBuilder.Entity("GNS.Core.Models.Group", b =>
                 {
                     b.Navigation("Games");
 
                     b.Navigation("Players");
+                });
+
+            modelBuilder.Entity("GNS.Core.Models.Record", b =>
+                {
+                    b.Navigation("Winners");
                 });
 #pragma warning restore 612, 618
         }

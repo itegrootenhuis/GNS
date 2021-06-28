@@ -5,6 +5,6 @@ namespace GNS.Web.Models
 {
     public class AdminViewModel
     {
-        public List<GameGroup> GameGroups { get; set; }
+        public List<Group> Groups { get; set; }
     }
 }

@@ -4,13 +4,16 @@
 <p>Add Player</p>
 
 <form action="/Admin/AddPerson" method="post">
+    <label>First Name</label>
     <input type="text" name="firstName" />
+    <label>Last Name</label>
     <input type="text" name="lastName" />
+    <label>Email</label>
     <input type="email" name="email" />
     <select>
-        @foreach (var group in Model.GameGroups)
+        @foreach ( var group in Model.Groups )
         {
-            <option value="@group.Id">@group.Name</option>
+            <option value="@group.GroupId">@group.Name</option>
         }
     </select>
 
@@ -18,8 +21,55 @@
 </form>
 
 <p>Add Gaming Group</p>
-<form action="/Admin/AddGameGroup" method="post">
+<form action="/Admin/AddGroup" method="post">
+    <label>Group Name</label>
     <input type="text" name="groupName" />
 
     <input type="submit" value="Add Group" />
 </form>
+
+<p>Add Gaming Group</p>
+<form action="/Admin/AddGame" method="post">
+    <label>Game Name</label>
+    <input type="text" name="gameName" />
+
+    <select name="groupId">
+        @foreach ( var group in Model.Groups )
+        {
+            <option value="@group.GroupId">@group.Name</option>
+        }
+    </select>
+
+    <input type="submit" value="Add Group" />
+</form>
+
+
+<h1>Your Groups</h1>
+@foreach ( var group in Model.Groups )
+{
+    <div>
+        <h3>@group.Name</h3>
+        <h4>Players</h4>
+        @if ( group.Players != null )
+        {
+            <ul>
+                @foreach ( var player in group.Players )
+                {
+                    <li>@player.FirstName @player.LastName</li>
+                }
+            </ul>
+        }
+
+        <h4>Games</h4>
+        @if ( group.Games != null )
+        {
+            <ul>
+                @foreach ( var game in group.Games )
+                {
+                    <li>@game.Name</li>
+                }
+            </ul>
+        }
+    </div>
+
+}

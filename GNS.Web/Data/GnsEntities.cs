@@ -11,8 +11,9 @@ namespace GNS.Web.Data
         #endregion
 
         public virtual DbSet<Game> Games { get; set; }
-        public virtual DbSet<GameGroup> GameGroups { get; set; }
+        public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<Player> Players { get; set; }
+        public virtual DbSet<Record> Records { get; set; }
 
         public GnsEntities(IConfiguration configuration)
             => this.configuration = configuration;

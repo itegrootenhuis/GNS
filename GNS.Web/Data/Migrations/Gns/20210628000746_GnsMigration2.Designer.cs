@@ -4,14 +4,16 @@ using GNS.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GNS.Web.Data.Migrations.Gns
 {
     [DbContext(typeof(GnsEntities))]
-    partial class GnsEntitiesModelSnapshot : ModelSnapshot
+    [Migration("20210628000746_GnsMigration2")]
+    partial class GnsMigration2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,7 +69,7 @@ namespace GNS.Web.Data.Migrations.Gns
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("GroupId")
+                    b.Property<Guid?>("GroupId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LastName")
@@ -117,9 +119,7 @@ namespace GNS.Web.Data.Migrations.Gns
                 {
                     b.HasOne("GNS.Core.Models.Group", "Group")
                         .WithMany("Players")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GroupId");
 
                     b.HasOne("GNS.Core.Models.Record", null)
                         .WithMany("Winners")

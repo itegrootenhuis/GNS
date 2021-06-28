@@ -13,7 +13,7 @@ namespace GNS.Web.Controllers
         #region Fields
         private readonly GnsEntities gnsEntities;
         #endregion
-        public AdminController(GnsEntities gnsEntities)
+        public AdminController( GnsEntities gnsEntities )
         {
             this.gnsEntities = gnsEntities;
         }
@@ -21,39 +21,53 @@ namespace GNS.Web.Controllers
         {
             var viewmodel = new AdminViewModel()
             {
-                GameGroups = gnsEntities.GameGroups.ToList()
+                Groups = gnsEntities.Groups.ToList()
             };
 
-            return View(viewmodel);
+            return View( viewmodel );
         }
 
         [HttpPost]
-        public void AddPerson(string firstName, string lastName, string email, Guid gameGroupId)
+        public void AddPerson( string firstName, string lastName, string email, Guid groupId )
         {
             var player = new Player()
             {
                 FirstName = firstName,
                 LastName = lastName,
                 Email = email,
-                Id = Guid.NewGuid(),
-                GameGroupId = gameGroupId
+                PlayerId = Guid.NewGuid(),
+                Group = gnsEntities.Groups.FirstOrDefault( x => x.GroupId == groupId )
             };
 
-            gnsEntities.Players.Add(player);
+            gnsEntities.Players.Add( player );
             gnsEntities.SaveChanges();
         }
 
         [HttpPost]
-        public void AddGameGroup(string groupName)
+        public void AddGroup( string groupName )
         {
-            var gameGroup = new GameGroup()
+            var gameGroup = new Group()
             {
-                LedgerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)),
+                LedgerId = Guid.Parse( User.FindFirstValue( ClaimTypes.NameIdentifier ) ),
                 Name = groupName,
-                Id = Guid.NewGuid()
+                GroupId = Guid.NewGuid()
             };
 
-            gnsEntities.GameGroups.Add(gameGroup);
+            gnsEntities.Groups.Add( gameGroup );
+            gnsEntities.SaveChanges();
+        }
+
+        [HttpPost]
+        public void AddGame( string gameName, Guid groupId )
+        {
+            var game = new Game()
+            {
+                GameId = Guid.NewGuid(),
+                Group = gnsEntities.Groups.FirstOrDefault( x => x.GroupId == groupId ),
+                Name = gameName
+            };
+
+            gnsEntities.Games.Add( game );
             gnsEntities.SaveChanges();
         }
     }

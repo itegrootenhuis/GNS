@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace GNS.Core.Models
 {
-    public class GameGroup
+    public class Group
     {
-        public IEnumerable<Game> Games { get; set; }
-
-        public Guid Id { get; set; }
+        public Guid GroupId { get; set; }
 
         public Guid LedgerId { get; set; }
 
         public string Name { get; set; }
 
-        public IEnumerable<Player> Players { get; set; }
+        public ICollection<Game> Games { get; set; }
+
+        public ICollection<Player> Players { get; set; }
     }
 }
