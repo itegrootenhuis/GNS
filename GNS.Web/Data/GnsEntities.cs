@@ -15,12 +15,12 @@ namespace GNS.Web.Data
         public virtual DbSet<Player> Players { get; set; }
         public virtual DbSet<Record> Records { get; set; }
 
-        public GnsEntities(IConfiguration configuration)
+        public GnsEntities( IConfiguration configuration )
             => this.configuration = configuration;
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring( DbContextOptionsBuilder optionsBuilder )
         {
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+            optionsBuilder.UseSqlServer( configuration.GetConnectionString( "DefaultConnection" ) );
         }
     }
 }

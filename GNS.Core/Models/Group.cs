@@ -11,8 +11,8 @@ namespace GNS.Core.Models
 
         public string Name { get; set; }
 
-        public ICollection<Game> Games { get; set; }
+        public IEnumerable<Game> Games { get; set; }
 
-        public ICollection<Player> Players { get; set; }
+        public IEnumerable<Player> Players { get; set; }
     }
 }

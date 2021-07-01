@@ -10,7 +10,7 @@
     <input type="text" name="lastName" />
     <label>Email</label>
     <input type="email" name="email" />
-    <select>
+    <select name="groupId">
         @foreach ( var group in Model.Groups )
         {
             <option value="@group.GroupId">@group.Name</option>
@@ -28,7 +28,7 @@
     <input type="submit" value="Add Group" />
 </form>
 
-<p>Add Gaming Group</p>
+<p>Add Game</p>
 <form action="/Admin/AddGame" method="post">
     <label>Game Name</label>
     <input type="text" name="gameName" />
@@ -40,8 +40,44 @@
         }
     </select>
 
-    <input type="submit" value="Add Group" />
+    <input type="submit" value="Add Game" />
 </form>
+
+<p>Add Record</p>
+<form action="/Admin/AddRecord" method="post">
+    <label>Select the group</label>
+    <select>
+        @foreach ( var group in Model.Groups )
+        {
+            <option value="@group.GroupId">@group.Name</option>
+        }
+    </select>
+
+    @foreach ( var group in Model.Groups )
+    {
+        <label>Select the Game (@group.Name)</label>
+        <select data-group-id="@group.GroupId" name="gameId">
+            @foreach ( var game in group.Games )
+            {
+                <option value="@game.GameId">@game.Name</option>
+            }
+        </select>
+    }
+
+    @foreach ( var group in Model.Groups )
+    {
+        <label>Select the Winner (@group.Name)</label>
+        <select data-group-id="@group.GroupId" name="winnerId">
+            @foreach ( var player in group.Players )
+            {
+                <option value="@player.PlayerId">@player.FirstName</option>
+            }
+        </select>
+    }
+
+    <input type="submit" value="Add Record" />
+</form>
+
 
 
 <h1>Your Groups</h1>
@@ -71,5 +107,12 @@
             </ul>
         }
     </div>
-
 }
+
+<h1>Your Group Records</h1>
+<ul>
+    @foreach ( var record in Model.Records )
+    {
+        <li>@record.Winner.FirstName @record.Winner.LastName - @record.Game.Name</li>
+    }
+</ul>

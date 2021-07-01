@@ -4,14 +4,16 @@ using GNS.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GNS.Web.Data.Migrations.Gns
 {
     [DbContext(typeof(GnsEntities))]
-    partial class GnsEntitiesModelSnapshot : ModelSnapshot
+    [Migration("20210701012219_GnsMigration4")]
+    partial class GnsMigration4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,9 +75,14 @@ namespace GNS.Web.Data.Migrations.Gns
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("RecordId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("PlayerId");
 
                     b.HasIndex("GroupId");
+
+                    b.HasIndex("RecordId");
 
                     b.ToTable("Players");
                 });
@@ -92,14 +99,9 @@ namespace GNS.Web.Data.Migrations.Gns
                     b.Property<Guid?>("GameId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("WinnerPlayerId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("RecordId");
 
                     b.HasIndex("GameId");
-
-                    b.HasIndex("WinnerPlayerId");
 
                     b.ToTable("Records");
                 });
@@ -121,6 +123,10 @@ namespace GNS.Web.Data.Migrations.Gns
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("GNS.Core.Models.Record", null)
+                        .WithMany("Winners")
+                        .HasForeignKey("RecordId");
+
                     b.Navigation("Group");
                 });
 
@@ -130,13 +136,7 @@ namespace GNS.Web.Data.Migrations.Gns
                         .WithMany()
                         .HasForeignKey("GameId");
 
-                    b.HasOne("GNS.Core.Models.Player", "Winner")
-                        .WithMany()
-                        .HasForeignKey("WinnerPlayerId");
-
                     b.Navigation("Game");
-
-                    b.Navigation("Winner");
                 });
 
             modelBuilder.Entity("GNS.Core.Models.Group", b =>
@@ -144,6 +144,11 @@ namespace GNS.Web.Data.Migrations.Gns
                     b.Navigation("Games");
 
                     b.Navigation("Players");
+                });
+
+            modelBuilder.Entity("GNS.Core.Models.Record", b =>
+                {
+                    b.Navigation("Winners");
                 });
 #pragma warning restore 612, 618
         }

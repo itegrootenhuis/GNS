@@ -6,5 +6,7 @@ namespace GNS.Web.Models
     public class AdminViewModel
     {
         public List<Group> Groups { get; set; }
+
+        public List<Record> Records { get; set; }
     }
 }

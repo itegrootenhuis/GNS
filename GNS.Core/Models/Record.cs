@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace GNS.Core.Models
 {
@@ -9,7 +8,7 @@ namespace GNS.Core.Models
 
         public Game Game { get; set; }
 
-        public ICollection<Player> Winners { get; set; }
+        public Player Winner { get; set; }
 
         public DateTime CreatedOn { get; set; }
     }
