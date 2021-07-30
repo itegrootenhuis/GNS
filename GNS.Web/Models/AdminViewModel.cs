@@ -8,5 +8,7 @@ namespace GNS.Web.Models
         public List<Group> Groups { get; set; }
 
         public List<Record> Records { get; set; }
+
+        public RecordForm RecordForm { get; set; }
     }
 }

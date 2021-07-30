@@ -5,6 +5,7 @@ using GNS.Core.Models;
 using GNS.Web.Data;
 using GNS.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GNS.Web.Controllers
 {
@@ -21,10 +22,16 @@ namespace GNS.Web.Controllers
 
         public IActionResult Index()
         {
+            var loggedInLedgerId = Guid.Parse( User.FindFirstValue( ClaimTypes.NameIdentifier ) );
+
             var viewmodel = new AdminViewModel()
             {
-                Groups = gnsEntities.Groups.ToList(),
-                Records = gnsEntities.Records.ToList()
+                Groups = gnsEntities.Groups
+                    .Where( x => x.LedgerId == loggedInLedgerId )
+                    .ToList(),
+                Records = gnsEntities.Records
+                    .Where( x => x.Group.LedgerId == loggedInLedgerId )
+                    .ToList()
             };
 
             viewmodel.Groups.ForEach( group =>
@@ -43,6 +50,9 @@ namespace GNS.Web.Controllers
             viewmodel.Records.ForEach(
                 record => record.Game = gnsEntities.Games
                     .FirstOrDefault( game => game.GameId == record.Game.GameId ) );
+
+            viewmodel.RecordForm = new RecordForm();
+            FilterSelectOptions( viewmodel.RecordForm );
 
             return View( viewmodel );
         }
@@ -98,20 +108,44 @@ namespace GNS.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddRecord( Guid gameId, Guid winnerId )
+        public IActionResult AddRecord( RecordForm recordForm )
         {
+            if ( !ModelState.IsValid )
+            {
+                FilterSelectOptions( recordForm );
+                return View( nameof( AdminController.Index ), recordForm );
+            }
             var record = new Record()
             {
                 CreatedOn = DateTime.Now,
-                Game = gnsEntities.Games.FirstOrDefault( game => game.GameId == gameId ),
+                Game = gnsEntities.Games.FirstOrDefault( game => game.GameId == recordForm.SelectedGroupId ),
+                Group = gnsEntities.Groups.FirstOrDefault( group => group.GroupId == recordForm.SelectedGroupId ),
                 RecordId = Guid.NewGuid(),
-                Winner = gnsEntities.Players.FirstOrDefault( x => x.PlayerId == winnerId )
+                Winner = gnsEntities.Players.FirstOrDefault( x => x.PlayerId == recordForm.SelectedPlayerId )
             };
 
             gnsEntities.Records.Add( record );
             gnsEntities.SaveChanges();
 
             return Redirect( nameof( AdminController.Index ) );
+        }
+
+        private void FilterSelectOptions( RecordForm recordForm )
+        {
+            recordForm.GroupList = new SelectList( gnsEntities.Groups, "GroupId", "Name" );
+            if ( recordForm.SelectedGroupId.HasValue )
+            {
+                var games = gnsEntities.Games.Where( game => game.Group.GroupId == recordForm.SelectedGroupId.Value );
+                recordForm.GameList = new SelectList( games, "ID", "Name" );
+
+                var players = gnsEntities.Players.Where( player => player.GroupId == recordForm.SelectedGroupId.Value );
+                recordForm.GameList = new SelectList( players, "ID", "Name" );
+            }
+            else
+            {
+                recordForm.GameList = new SelectList( Enumerable.Empty<SelectListItem>() );
+                recordForm.PlayerList = new SelectList( Enumerable.Empty<SelectListItem>() );
+            }
         }
     }
 }

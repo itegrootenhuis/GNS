@@ -8,6 +8,8 @@ namespace GNS.Core.Models
 
         public Game Game { get; set; }
 
+        public Group Group { get; set; }
+
         public Player Winner { get; set; }
 
         public DateTime CreatedOn { get; set; }

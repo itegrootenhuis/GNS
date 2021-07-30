@@ -1,24 +1,6 @@
 ﻿@model AdminViewModel
+
 <h1>Admin</h1>
-
-<p>Add Player</p>
-
-<form action="/Admin/AddPerson" method="post">
-    <label>First Name</label>
-    <input type="text" name="firstName" />
-    <label>Last Name</label>
-    <input type="text" name="lastName" />
-    <label>Email</label>
-    <input type="email" name="email" />
-    <select name="groupId">
-        @foreach ( var group in Model.Groups )
-        {
-            <option value="@group.GroupId">@group.Name</option>
-        }
-    </select>
-
-    <input type="submit" value="Add Person" />
-</form>
 
 <p>Add Gaming Group</p>
 <form action="/Admin/AddGroup" method="post">
@@ -28,56 +10,54 @@
     <input type="submit" value="Add Group" />
 </form>
 
-<p>Add Game</p>
-<form action="/Admin/AddGame" method="post">
-    <label>Game Name</label>
-    <input type="text" name="gameName" />
+@if ( Model.Groups.Count > 0 )
+{
+    <p>Add Player</p>
+    <form action="/Admin/AddPerson" method="post">
+        <label>First Name</label>
+        <input type="text" name="firstName" />
+        <label>Last Name</label>
+        <input type="text" name="lastName" />
+        <label>Email</label>
+        <input type="email" name="email" />
+        <select name="groupId">
+            @foreach ( var group in Model.Groups )
+            {
+                <option value="@group.GroupId">@group.Name</option>
+            }
+        </select>
 
-    <select name="groupId">
-        @foreach ( var group in Model.Groups )
-        {
-            <option value="@group.GroupId">@group.Name</option>
-        }
-    </select>
+        <input type="submit" value="Add Person" />
+    </form>
 
-    <input type="submit" value="Add Game" />
-</form>
+    <p>Add Game</p>
+    <form action="/Admin/AddGame" method="post">
+        <label>Game Name</label>
+        <input type="text" name="gameName" />
+
+        <select name="groupId">
+            @foreach ( var group in Model.Groups )
+            {
+                <option value="@group.GroupId">@group.Name</option>
+            }
+        </select>
+
+        <input type="submit" value="Add Game" />
+    </form>
+}
 
 <p>Add Record</p>
-<form action="/Admin/AddRecord" method="post">
-    <label>Select the group</label>
-    <select>
-        @foreach ( var group in Model.Groups )
-        {
-            <option value="@group.GroupId">@group.Name</option>
-        }
-    </select>
+@Html.LabelFor( m => m.RecordForm.SelectedGroupId )
+@Html.DropDownListFor( m => m.RecordForm.SelectedGroupId, Model.RecordForm.GroupList, "-Please Select-" )
+@Html.ValidationMessageFor( m => m.RecordForm.SelectedGroupId )
 
-    @foreach ( var group in Model.Groups )
-    {
-        <label>Select the Game (@group.Name)</label>
-        <select data-group-id="@group.GroupId" name="gameId">
-            @foreach ( var game in group.Games )
-            {
-                <option value="@game.GameId">@game.Name</option>
-            }
-        </select>
-    }
+@Html.LabelFor( m => m.RecordForm.SelectedGameId )
+@Html.DropDownListFor( m => m.RecordForm.SelectedGameId, Model.RecordForm.GameList, "-Please Select-" )
+@Html.ValidationMessageFor( m => m.RecordForm.SelectedGameId )
 
-    @foreach ( var group in Model.Groups )
-    {
-        <label>Select the Winner (@group.Name)</label>
-        <select data-group-id="@group.GroupId" name="winnerId">
-            @foreach ( var player in group.Players )
-            {
-                <option value="@player.PlayerId">@player.FirstName</option>
-            }
-        </select>
-    }
-
-    <input type="submit" value="Add Record" />
-</form>
-
+@Html.LabelFor( m => m.RecordForm.SelectedPlayerId)
+@Html.DropDownListFor( m => m.RecordForm.SelectedPlayerId, Model.RecordForm.PlayerList, "-Please Select-" )
+@Html.ValidationMessageFor( m => m.RecordForm.SelectedPlayerId )
 
 
 <h1>Your Groups</h1>
@@ -110,9 +90,36 @@
 }
 
 <h1>Your Group Records</h1>
-<ul>
-    @foreach ( var record in Model.Records )
-    {
-        <li>@record.Winner.FirstName @record.Winner.LastName - @record.Game.Name</li>
-    }
-</ul>
+@foreach ( var group in Model.Groups )
+{
+    <h3>@group.Name</h3>
+    <ul>
+        @foreach ( var record in Model.Records )
+        {
+            if ( record.Group.GroupId == group.GroupId )
+            {
+                <li>@record.Winner.FirstName @record.Winner.LastName - @record.Game.Name</li>
+            }
+        }
+    </ul>
+}
+
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+        integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+        crossorigin="anonymous"></script>
+<script>
+   var url = '@Url.Action("FetchPlayers")';
+    var employees = $('SelectedPlayers');
+    $('#SelectedGroup').change(function() {
+      employees.empty();
+      if(!$(this).val()) {
+        return;
+      }
+      employees.append($('<option></option>').val('').text('-Please select-'));
+      $.getJson(url, { ID: $(this).val() }, function(data) {
+        $.each(data, function(index, item) {
+          employees.append($('<option></option>').val(item.ID).text(item.Text));
+        });
+      });
+    });
+</script>
