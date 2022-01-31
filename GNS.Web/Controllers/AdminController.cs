@@ -139,7 +139,7 @@ namespace GNS.Web.Controllers
                 recordForm.GameList = new SelectList( games, "ID", "Name" );
 
                 var players = gnsEntities.Players.Where( player => player.GroupId == recordForm.SelectedGroupId.Value );
-                recordForm.GameList = new SelectList( players, "ID", "Name" );
+                recordForm.PlayerList = new SelectList( players, "ID", "Name" );
             }
             else
             {

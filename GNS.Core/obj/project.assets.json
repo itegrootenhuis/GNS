@@ -366,7 +366,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\itegrootenhuis\\.nuget\\packages\\": {},
+    "C:\\Users\\TeGro\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
     "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
@@ -374,11 +374,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\itegrootenhuis\\Documents\\BZS\\GNS\\GNS.Core\\GNS.Core.csproj",
+      "projectUniqueName": "E:\\Personal Projects\\GNS\\GNS.Core\\GNS.Core.csproj",
       "projectName": "GNS.Core",
-      "projectPath": "C:\\Users\\itegrootenhuis\\Documents\\BZS\\GNS\\GNS.Core\\GNS.Core.csproj",
-      "packagesPath": "C:\\Users\\itegrootenhuis\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\itegrootenhuis\\Documents\\BZS\\GNS\\GNS.Core\\obj\\",
+      "projectPath": "E:\\Personal Projects\\GNS\\GNS.Core\\GNS.Core.csproj",
+      "packagesPath": "C:\\Users\\TeGro\\.nuget\\packages\\",
+      "outputPath": "E:\\Personal Projects\\GNS\\GNS.Core\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -386,7 +386,7 @@
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\itegrootenhuis\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\TeGro\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
@@ -434,7 +434,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }
